@@ -188,6 +188,69 @@ Supongamos que queremos añadir un campo o cambiar algún tipo de algún campo
 Una forma cómoda de hacerlo es realizando el cambio en el fichero de la base de datos
 
 Ahora ejecutamos el método refresh y así se actualizará
+### El modelo: operando con la base de datos en laravel
+ Un modelo va a ser una clase que nos va a permitir interactuar con una tabla dentro de nuestra aplicación
+
+ Tenemos dos formas de estabecer comunicaciones DB y ORM
+
+ Con ORM vamos a disponer de funcionalidades sin tener por qué hacer prácticamente ninguna operación extra, simplemente usando los métodos para interactuar
+
+Para crear el modelo
+<pre>
+ php artisan make:Model Persona
+</pre>
+ 
+Por defecto, hay una serie de supuestos, que se pueden modificar:
+
+1.- Nombre de la tabla: Se espera el mismo nombre, pero en plurar, para cambiarlo
+ <pre>
+ protected $table="nombre_tabla";
+ </pre>
+2.- Primery Key id (autoincrement).
+
+Para cambiarlo (observa que son tres cuestiones independientes (no todas): el nombre y el autoincrement y el tipo)
+ <pre>
+ protected $primerayKey="nombre_tabla";
+ protected $keyType='string';
+ public $incrementing=false;
+
+ </pre>
+
+ </pre>
+3.- Marcas de tiempo para auditar tablas
+ 
+Las tablas tienen 2 campos de tiempo que nos van a permitir tener una auditoría sobre cada tupla:
+1. create_at 
+2. update_at
+
+Si la tabla no va a tener estos campos , hay que especificárselo al mdelo
+<pre>
+ public $timestamp = false; 
+</pre>
+  
+### Obteniendo resultado de una consulta y pasarlo a una vista
+
+*Ahora ya tenemos los ingredientes para la utilización, debemos ponerlo en marcha:
+
+ 1. Router
+ 2. Controlador
+ 3. Modelo
+ 4. Vista
+
+Vamos a usarlo en un caso sencillo: 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Cómo poblar las tablas
