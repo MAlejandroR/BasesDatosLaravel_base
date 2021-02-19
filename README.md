@@ -172,7 +172,7 @@ La clase Blueprint presenta los métodos para la gestión de cada columna o nomb
 
 En nuestro caso vamos a crear la migración 
 <pre>
- php artisna migrete
+ php artisna migrate
 </pre>
 
 Vemos que nos ha creado la tabla en la base de datos.
@@ -261,6 +261,100 @@ Vamos a usarlo en un caso sencillo:
 
 * Para ello vamos a usar clases creadas en  *****factories y seeders***** (ver carpetas en la sección ***database***)
   ![Carpetas de databases](./documentacion/imagenes/carpetas_database.png)
+
+ Con seeder lo que hacemos en ejecutar instrucciones de inserción de datos
+#### Factory
+ https://medium.com/dev-genius/laravel-8-x-database-seeders-fakers-and-factories-7cb759918124
+
+Una clase que extiende de  Factory va a ser una clase contener dos elementos:
+1. Una clase de un modelo
+2. Un método de definición para ese modelo
+
+Estos concetos pueden resultar un poco abstractos pero a continuación vemos su utilidad.
+Una clase  factory de un modelo, es una clase donde vamos a construir un modelo a través del método de definición
+
+Para ello vamos a crear una factoría o Factory para nuestro modelo ***Persona***
+
+Cómo ya tenemos el modelo, se puede especificar en la construcción de la clase, si no, habría que añadirlo en la clase
+<pre>
+ php artisan make:factory FactoryPersona --model=Persona
+</pre>
+
+* Vemos la clase creada donde se especifica el ***modelo*** y tenemos el método de definición que vamos a ver cómo utilizaro
+<pre>
+class PersonaFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Persona::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            //
+        ];
+    }
+}
+</pre>
+
+
+Ahora vamos a escribir el código en la definición, vamos a hacer que nos devuelva un valor para cada campo
+
+Vamos a generar valores aleatorios, aunque no tengan mucho sentido
+<pre>
+public function definition()
+{
+return [
+     'nombre_usuario'=>"Nombre usuario ".random_int(1,1000000),'name'=>"nombre".random_int(1,50),
+     'apellido'=>"Apellido".random_int(1,50),
+     'dni'=>random_int(1,1000000),
+     'direccion'=>"Apellido".random_int(1,50),
+     'email'=>random_int(1,1000000),
+     'nombre_usuario'=>"Nombre usuario ".random_int(1,1000000),
+
+];
+}
+
+Ahora ya tenemos la *** Factoría *** creada para el modelo **Persona** a través de la clase ****PersonaFactory**** 
+
+#### Seed
+https://laravel.com/docs/8.x/seeding#introduction
+Con esta utilidad de laravel, vamos a poder poblar las bases de datos
+
+ Igualmente que en el caso anterior, vamos a crear una clase de Seed para cada modelo
+<pre>
+  php artisan make:seed PersonaSeeder
+</pre>
+ Se crea una clase con un método **run** que se ejecutará cuando invoquemos a la clase
+ Lo que tenemos que hacer en este método es crear una factoria del modelo
+
+ Una vez Creado el Seed, lo que tenemos que hacer es invocarlo desde la Clase DatabaseSeeder
+ Para ello, en el método run, invocamos la ejecución de la clase con el método **call** 
+
+<pre>
+    $this->call(PersonasSeeder::class);
+</pre>
+
+Lo único que nos queda es 
+
+
+
+
+
+
+Con Factory mediante la biblioteca facker vamos a obtener datos aleatorios, pero válidos para dicha inserción
+
+
+#### Faker
+https://github.com/fzaninotto/Faker
 
 
 ### Interaccionar una tabla con una aplicación en laravel
